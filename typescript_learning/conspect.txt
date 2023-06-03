@@ -86,3 +86,18 @@ const canvas = document.getElementById('canvas') as HTMLCanvasElement
 для каждого вложенного объекта создавать отдельный интерфейс.
 Это позволит легче воспринимать инормацию и переиспользовать интерфейсы,
 если данные сложного объекта будут использованы где-либо частично.
+
+
+Литеральные типы
+Переменная literal  может принимать только значение 'test1'
+let literal: 'test1' = 'test1'
+
+Для литерального actionType допустимы только значения 'up'|'down'.
+Это поведение напоминает тип Enum.
+type actionType = 'up' | 'down'
+
+Возвращаемое функцией значение можно типизировать конкретными литералами:
+function performAction(action: actionType): 1 | -1
+
+Литеральные типы можно комбинировать с обычными типами и интерфейсами
+function exampleFunction(action:actionType|IAction){return}
