@@ -1,0 +1,131 @@
+npx - утилита, которая позволяет исполнять npm-пакеты
+
+npx create-next-app --help //выводит доступные опции
+
+Options:
+  -V, --version                        output the version number
+  --ts, --typescript
+
+    Initialize as a TypeScript project. (default)
+
+  --js, --javascript
+
+    Initialize as a JavaScript project.
+
+  --tailwind
+
+    Initialize with Tailwind CSS config. (default)
+
+  --eslint
+
+    Initialize with eslint config.
+
+  --app
+
+    Initialize as an App Router project.
+
+  --src-dir
+
+    Initialize inside a `src/` directory.
+
+  --import-alias <alias-to-configure>
+
+    Specify import alias to use (default "@/*").
+
+  --use-npm
+
+    Explicitly tell the CLI to bootstrap the application using npm
+
+  --use-pnpm
+
+    Explicitly tell the CLI to bootstrap the application using pnpm
+
+  --use-yarn
+
+    Explicitly tell the CLI to bootstrap the application using Yarn
+
+  -e, --example [name]|[github-url]
+
+   Пример начальной загрузки приложения.
+   Вы можете использовать пример имени из официального репозитория Next.js или URL-адрес GitHub.
+   URL-адрес может использовать любую ветвь и/или подкаталог.
+
+  --example-path <path-to-example>
+
+   В редких случаях URL-адрес вашего GitHub может содержать имя ветки с косой чертой
+    (например, bug/fix-1) и путь к примеру (например, foo/bar).
+   В этом случае необходимо указать путь к примеру отдельно:
+    --example-path foo/bar
+
+  --reset-preferences
+
+    Explicitly tell the CLI to reset any stored preferences
+
+  -h, --help                           output usage information
+
+
+При выполнении команды: npx create-next-app project-dir-name --use-npm
+консольное приложение автоматически предложит подключить Typescript в проект.
+
+Чтобы вручную подключить Typescript в проект,
+необходимо создать в папке проекта файл tscofig.json,
+ установить зависимости командой
+ npm i -D typescript @types/react @types/node,
+ переименовать файлы из js в tsx
+ и запустить проект в DEV-режиме:
+ npm run dev
+Остальное NextJS сделает автоматически.
+
+
+
+Структура проекта на NextJS
+.next - скомпилированные статические страницы проекта, которые будут отдаваться пользователю
+pages - (зарезервированное название) используется для организации страниц и роутинга между ними
+    index.tsx - корневвя страница домена
+    из названий вложенных в pages папок и файлов формируются url страниц, отображающих их содержимое
+public - содержит файлы, которые должны быть в публичном доступе: картинки, фавиконы, манифесты
+styles - содержит файлы стилей:
+    globals.css - глобальные стили для всего приложения
+                  в нём удобно объявлять css-переменные
+    а также файлы стилей модулей (их удобнее хранить в папке компонентов)
+next-env.d.ts - служебный файл, который служит для того, чтобы NextJS видел зависимости next и next/types/global
+package.json - зависимости проекта
+tsconfig.json - конфигурация Typescript
+
+
+package.json
+    "scripts" - команды для выполнения скриптов
+                next dev - fast refresh (используется во время разработки)
+                next build - сборка итогового проекта для production
+                next start - запуск сервера для отображения страниц, полученных во время next build
+    "dependencies" -
+    "devDpendencies" - зависимости, которые используются в проекте на этапе разработки
+
+
+tsconfig.json
+    "allowJs" - поддерживать JS-файлы (нужно false, чтобы нетипизированные файлы вызывали ошибки компиляции)
+    "scipLibCheck" - игнорировать ошибки и предупреждения библиотек
+    "strict" - более жёсткие ограничения Typescript (рекомендуется true)
+    "strictPropertyInitialisation" - обязательность инициализации каждого свойства класса (рекомендуется false)
+
+
+
+ESLint - инструмент статического анализа кода для выявления проблемных шаблонов, обнаруженных в коде JavaScript.
+
+Мастер настройки проекта автоматически предлагает подключить ESLint к проекту.
+При необходимости ручного подключения ESLint требуется ввести команду:
+npm i -D eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin
+
+.eslintrc.json - настройки ESLint
+    "semi": "off" - отключает стандартные правила проверки ";" и использует правила ESLint
+
+    "@typescript-eslint/semi": [
+          "warn"
+        ] - при отсутствии ";" - предупреждать ("error" - выдавать ошибку)
+
+        "@typescript-eslint/no-empty-interface": [
+          "error",  //выдавать ошибки при создании пустых интерфейсов
+          {
+            "allowSingleExtends": true //исключение для пустых интерфейсов, расширяющих другие интерфейсы (например, библиотечные)
+          }
+        ]
